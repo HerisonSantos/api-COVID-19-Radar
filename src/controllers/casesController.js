@@ -1,5 +1,6 @@
 
 const cases =require('../models/case')
+const states = require('../utils/arrays')
 
 module.exports = {
 async case(req, res){
@@ -8,18 +9,26 @@ async case(req, res){
           death:req.body.death,
           state:req.body.state,
           date:req.body.date,
+          name:req.body.name,
+          
         })
         res.json(Cases)
          
       },async getcase(req, res){
-          const Cases= await cases.countDocuments({state:req.query.state})
-          const death = await cases.countDocuments({state:req.query.state,death:true})
-          res.json({
-            state:req.query.state,
+        let confirmedCases = [];
+        for (var x = 0; x < states.length; x++) {
+          const Cases= await cases.countDocuments({state:states[x].key})
+          const death = await cases.countDocuments({state:states[x].key,death:true})
+          
+          const stateCase = {
+            state:states[x].value,
             cases: Cases,
             death:death,
 
-          })
+          }
+          confirmedCases[x] = stateCase;
+        }
+          res.json(confirmedCases)
           
         }
   }
