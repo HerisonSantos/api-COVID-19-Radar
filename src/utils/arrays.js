@@ -29,9 +29,5 @@ const states = [
   { key: 'TO', value: 'Tocantis' },
 ];
 
- const chartsTypes = [
-  { value: 'line', key: 'line' },
-  { value: 'area', key: 'area' },
-  { value: 'bar', key: 'bar' },
-];
+ 
 module.exports= states;
